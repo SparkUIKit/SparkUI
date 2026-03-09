@@ -99,6 +99,7 @@ public struct SparkAlert: View {
         case .success: return config.successColor
         case .warning: return config.warningColor
         case .danger: return config.dangerColor
+        case .info: return config.infoColor
         case .default: return Color.gray
         }
     }
@@ -109,6 +110,7 @@ public struct SparkAlert: View {
         case .success: return "checkmark.circle.fill"
         case .warning: return "exclamationmark.triangle.fill"
         case .danger: return "xmark.circle.fill"
+        case .info: return "info.circle.fill"
         case .default: return "bell.fill"
         }
     }

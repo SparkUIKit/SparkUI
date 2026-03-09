@@ -102,14 +102,16 @@ public struct SparkButton: View {
     }
     
     private var colorForType: Color {
-        switch type {
-        case .primary: return config.primaryColor
-        case .success: return config.successColor
-        case .warning: return config.warningColor
-        case .danger: return config.dangerColor
-        case .default: return .gray
+            switch type {
+            case .primary: return config.primaryColor
+            case .success: return config.successColor
+            case .warning: return config.warningColor
+            case .danger: return config.dangerColor
+            case .default: return .gray
+            case .info: return config.infoColor  // 这里把占位符替换掉
+            @unknown default: return .gray
+            }
         }
-    }
     
     private var horizontalPadding: CGFloat {
         switch currentSize {

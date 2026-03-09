@@ -1,118 +1,126 @@
-太棒了！要把一个碎片化的组件库整合进 **SparkUI Pro**，一份高质量的 `README.md` 是必不可少的。它不仅是库的“门面”，更是开发者接入时的“导航地图”。
+---
 
-以下我为你起草了一份专业且极具商业感的说明文档：
+# SparkUI ⚡️
+
+**SparkUI** 是一款专为工业级 AI 应用、能源管理平台及复杂数据监控场景设计的 SwiftUI 组件库。它提供了高度语义化的色彩体系和灵活的布局逻辑，帮助开发者快速构建一致、高效且美观的现代化界面。
+
+## 🌟 特性
+
+* 🏗 **架构优先**: 基于环境值 (EnvironmentValues) 的注入机制，支持一键切换全局样式。
+* 🎨 **语义化色彩**: 完备的 `Primary`, `Success`, `Warning`, `Danger`, `Info` 五大核心语义状态。
+* 📱 **跨平台支持**: 深度优化 iOS 15+ 与 macOS 12+ 的原生渲染性能。
+* 🛠 **类型安全**: 全量支持 Swift 6 并发安全 (`Sendable`)。
+* 🌑 **暗黑模式**: 像素级适配深色模式，确保在工业监控环境下具备极佳的阅读舒适度。
 
 ---
 
-# ✨ SparkUI Pro
+## 📦 安装 (Swift Package Manager)
 
-**一个为 SwiftUI 设计的工业级、轻量化、跨平台 UI 组件库。**
-
-SparkUI Pro 旨在通过高度解耦的原子组件，帮助开发者快速构建具有“质感”的现代化应用。它不仅提供了美观的默认样式，还通过 `SparkConfig` 提供了强大的自定义主题能力。
-
----
-
-## 🎨 核心特性
-
-* **原子化设计**：遵循 Atomic Design 原则，从最小的 `SparkSize` 到复杂的 `SparkActionSheet`。
-* **跨平台兼容**：一套代码完美适配 iOS (UIKit) 与 macOS (AppKit)。
-* **动态响应**：原生支持深色模式 (Dark Mode) 及动态类型 (Dynamic Type)。
-* **极致体验**：内置基于 `matchedGeometryEffect` 的丝滑交互动效。
-
----
-
-## 📦 组件总览
-
-### 基础与配置 (Foundation)
-
-* `SparkConfig`: 全局主题中心（颜色、圆角、阴影）。
-* `SparkSize`: 统一的尺寸体系（Mini, Small, Medium, Large）。
-* `SparkSpacing`: 标准化的间距工具。
-
-### 表单交互 (Form)
-
-* `SparkButton`: 响应式交互按钮。
-* `SparkInput`: 增强型带清除功能输入框。
-* `SparkStepper`: 步进器。
-* `SparkSegmented`: 丝滑平移效果的分段选择器。
-
-### 反馈与通知 (Feedback)
-
-* `SparkToast`: 非阻塞式全局轻提示。
-* `SparkActionSheet`: 模块化底部操作面板。
-* `SparkEmpty`: 优雅的缺省页占位。
-
-### 数据展示 (Data Display)
-
-* `SparkAvatar`: 带在线状态检测的头像。
-* `SparkBadge`: 红点与数字徽标。
-* `SparkDivider`: 带文字/图标的增强分割线。
+1. 在 Xcode 中打开你的项目，选择 **File > Add Packages...**。
+2. 在搜索框中输入你的仓库地址：
+`https://github.com/SparkUIKit/SparkUI.git`
+3. 选择版本范围或指定分支，点击 **Add Package**。
 
 ---
 
 ## 🚀 快速上手
 
-### 1. 环境初始化
+### 1. 配置注入
 
-在 App 入口注入你的全局配置：
-
-```swift
-@main
-struct YourApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .environment(\.sparkConfig, SparkConfig(primaryColor: .blue))
-        }
-    }
-}
-
-```
-
-### 2. 使用组件
+在应用的入口文件或根容器中挂载全局配置。
 
 ```swift
+import SwiftUI
 import SparkUI
 
-struct MyView: View {
-    @State private var isOnline = true
-    @State private var showToast = false
-
-    var body: some View {
-        VStack {
-            SparkAvatar(name: "Gemini", isOnline: isOnline)
-                .environment(\.sparkSize, .large)
-            
-            SparkButton("保存更改") {
-                showToast = true
+@main
+struct SparkApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ZStack {
+                ContentView()
+                    // 注入自定义配置（可选）
+                    .sparkConfig(SparkConfig())
+                
+                // 必须在根部挂载消息容器以支持弹窗提醒
+                SparkMessageContainer()
             }
         }
-        .sparkToast(isPresented: $showToast, style: .success, message: "配置已同步")
     }
+}
+
+```
+
+### 2. 使用基础组件
+
+```swift
+// 语义化标签
+SparkTag("数据正常", type: .success, effect: .light)
+    .sparkSize(.small)
+
+// 触发消息提醒
+Button("更新配置") {
+    SparkMessage.show("配置已同步至浙江能源平台", type: .info)
 }
 
 ```
 
 ---
 
-## 🛠 进阶：SparkUI Pro 路线图 (Roadmap)
+## 🎨 核心概念
 
-我们即将在 **SparkUI Pro** 中引入：
+### 语义化体系 (SparkType)
 
-* [ ] **SparkSkeleton**: 自动匹配布局的骨架屏。
-* [ ] **SparkCarousel**: 高度可定制的轮播组件。
-* [ ] **SparkCalendar**: 轻量级高性能日历选择器。
-* [ ] **SparkCharts**: 简洁的声明式图表库。
+我们不只是定义颜色，而是定义**状态**。
+
+* `.primary`: 品牌主色，用于主要操作。
+* `.success`: 运行正常、验证通过、在线状态。
+* `.warning`: 负载预警、待定状态。
+* `.danger`: 故障报错、离线状态、严重错误。
+* `.info`: 中性说明、信息辅助。
+
+### 尺寸逻辑 (SparkSize)
+
+通过 `.sparkSize()` 装饰器，可以统一控制容器及其子组件的比例：
+`mini` | `small` | `medium` (默认) | `large`
 
 ---
 
-## 📄 许可证
+## 🛠 自定义主题
 
-本项目采用 **MIT** 许可证。
+你可以通过重写 `SparkConfig` 来适配特定的品牌视觉需求：
+
+```swift
+var customConfig = SparkConfig()
+customConfig.primaryColor = Color.purple
+customConfig.cornerRadius = 12
+
+// 应用到视图层级
+ContentView().sparkConfig(customConfig)
+
+```
 
 ---
 
-**明天见！🚀** 如果你准备好了，明天我们第一件事就是把这些分散的文件正式通过 **Swift Package Manager** 进行工程化封装，并开始编写 `SparkUI Pro` 的第一个“进阶组件”！
+## 📚 组件概览
 
-**要不要我明天顺便教你如何把这个库发布到 GitHub 并支持 SPM 引用？**
+| 组件 | 分类 | 说明 |
+| --- | --- | --- |
+| `SparkTag` | 数据展示 | 语义化标签，支持三种外观模式 (`dark`, `light`, `plain`) |
+| `SparkMessage` | 反馈 | 全局顶部通知，支持队列管理 |
+| `SparkSpace` | 布局 | 灵活的间距容器，基于尺寸体系自动缩进 |
+| `SparkCard` | 数据展示 | 标准工业卡片容器，支持阴影与圆角配置 |
 
+---
+
+## 👨‍💻 作者
+
+Created by **Zhang Kaijie (张凯杰)** - 2026.
+
+---
+
+## 📄 开源协议
+
+本项目基于 **MIT** 协议开源。
+
+---

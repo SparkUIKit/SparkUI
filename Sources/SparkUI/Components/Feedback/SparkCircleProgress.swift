@@ -93,14 +93,16 @@ public struct SparkCircleProgress: View {
     }
 
     private var statusColor: Color {
-        switch type {
-        case .primary: return config.primaryColor
-        case .success: return config.successColor
-        case .warning: return config.warningColor
-        case .danger: return config.dangerColor
-        case .default: return .gray
+            switch type {
+            case .primary: return config.primaryColor
+            case .success: return config.successColor
+            case .warning: return config.warningColor
+            case .danger: return config.dangerColor
+            case .info: return config.infoColor
+            case .default: return Color.gray
+            @unknown default: return Color.gray
+            }
         }
-    }
 }
 
 #Preview {

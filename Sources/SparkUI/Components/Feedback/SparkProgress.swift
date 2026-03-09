@@ -105,6 +105,7 @@ public struct SparkProgress: View {
         case .success: return config.successColor
         case .warning: return config.warningColor
         case .danger: return config.dangerColor
+        case .info: return config.infoColor
         case .default: return .gray
         }
     }
