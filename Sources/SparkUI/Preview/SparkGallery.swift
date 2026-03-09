@@ -1,5 +1,5 @@
 //
-//  SparkGallery.swift.swift
+//  SparkGallery.swift
 //  SparkUI
 //
 //  Created by 张凯杰 on 2026/3/9.
@@ -8,43 +8,55 @@
 import SwiftUI
 
 public struct SparkGallery: View {
+    @State private var isEcoMode = false
+    @State private var mockValue: Double = 1284.5
+    
+    // 模拟能源绿主题
+    private var ecoConfig: SparkConfig {
+        var config = SparkConfig()
+        config.primaryColor = Color(red: 0.1, green: 0.7, blue: 0.4)
+        config.cornerRadius = 16
+        return config
+    }
+    
     public init() {}
     
     public var body: some View {
         NavigationView {
             List {
-                Section("基础组件 - SparkTag") {
-                    HStack {
-                        SparkTag("Primary", type: .primary)
-                        SparkTag("Success", type: .success, effect: .light)
-                        SparkTag("Info", type: .info, effect: .plain)
+                Section("交互演示") {
+                    Toggle("绿色能源模式 (生态绿)", isOn: $isEcoMode)
+                    Button("模拟实时数据刷新") {
+                        // 随机增减数值以测试滚动动画
+                        mockValue += Double.random(in: -50...100)
                     }
                 }
                 
-                Section("反馈组件 - SparkMessage") {
-                    Button("弹出 Info 消息") {
-                        SparkMessage.show("当前系统运行平稳", type: .info)
+                Section("能源监控卡片 (复合组件)") {
+                    VStack(spacing: 16) {
+                        SparkStatCard(
+                            title: "当日实时负荷",
+                            value: mockValue,
+                            unit: "MW",
+                            trend: 0.05,
+                            type: .primary
+                        )
+                        
+                        SparkStatCard(
+                            title: "清洁能源消纳占比",
+                            value: 82.4,
+                            unit: "%",
+                            trend: -0.02,
+                            type: .success
+                        )
                     }
-                }
-                
-                // 预留你后续要开发的组件位置
-                Section("开发中...") {
-                    Text("SparkForm (Coming soon)")
-                        .foregroundColor(.secondary)
+                    .padding(.vertical, 8)
                 }
             }
-            .navigationTitle("SparkUI 组件库预览")
+            .navigationTitle("SparkUI Gallery")
+            // 核心：动态注入配置，让子组件感知主题变化
+            .sparkConfig(isEcoMode ? ecoConfig : SparkConfig())
+            .animation(.easeInOut, value: isEcoMode)
         }
-    }
-}
-
-#Preview {
-    // 显式提供环境值，确保预览不报错
-    ZStack {
-        SparkGallery()
-            .environment(\.sparkConfig, SparkConfig()) // 注入默认配置
-            .environment(\.sparkSize, .medium)
-        
-        SparkMessageContainer()
     }
 }

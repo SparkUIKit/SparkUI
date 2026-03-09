@@ -11,23 +11,26 @@ public struct SparkStatCard: View {
     @Environment(\.sparkConfig) private var config
     
     let title: String
-    let value: String
+    let value: Double      // 确保是 Double
     let unit: String
-    let trend: Double? // 趋势百分比，如 0.15 表示上升 15%，-0.05 表示下降 5%
+    let trend: Double?
     let type: SparkType
+    let precision: Int
     
     public init(
         title: String,
-        value: String,
+        value: Double,
         unit: String,
         trend: Double? = nil,
-        type: SparkType = .primary
+        type: SparkType = .primary,
+        precision: Int = 1
     ) {
         self.title = title
         self.value = value
         self.unit = unit
         self.trend = trend
         self.type = type
+        self.precision = precision
     }
     
     public var body: some View {
@@ -38,7 +41,8 @@ public struct SparkStatCard: View {
                     .foregroundColor(.secondary)
                 
                 HStack(alignment: .firstTextBaseline, spacing: 4) {
-                    Text(value)
+                    // 调用组件
+                    SparkRollingNumber(value: value, precision: precision)
                         .font(.system(.title, design: .rounded))
                         .fontWeight(.bold)
                         .foregroundColor(config.color(for: type))
@@ -54,6 +58,8 @@ public struct SparkStatCard: View {
             }
             .padding(config.spacingMedium)
         }
+        // 关键：值变化时触发动画
+        .animation(.spring(response: 0.6, dampingFraction: 0.8), value: value)
     }
     
     @ViewBuilder
@@ -70,8 +76,9 @@ public struct SparkStatCard: View {
 
 #Preview {
     VStack(spacing: 20) {
-        SparkStatCard(title: "当日总耗电", value: "1,284.5", unit: "kWh", trend: 0.12, type: .primary)
-        SparkStatCard(title: "碳排放强度", value: "0.42", unit: "tCO₂/MWh", trend: -0.08, type: .success)
+        // 确保这里的 value 传入的是 Double
+        SparkStatCard(title: "当日总耗电", value: 1284.5, unit: "kWh", trend: 0.12, type: .primary)
+        SparkStatCard(title: "碳排放强度", value: 0.42, unit: "tCO₂/MWh", trend: -0.08, type: .success)
     }
     .padding()
 }
