@@ -1,6 +1,6 @@
 # SparkUI ⚡️
 
-**SparkUI** 是一款专为工业级 AI 应用、能源管理平台及复杂数据监控场景设计的 SwiftUI 组件库。它源自浙江省省级能源平台（如“慧能通”、“碳慧通”）的开发实践，旨在解决工业看板中高频出现的实时数据联动、语义化状态预警及多端布局适配问题。
+**SparkUI** 是一款专为Apple生态开发(Swift)、工业级 AI 应用、跨端平台开发及复杂数据监控场景设计的 SwiftUI 组件库。它源自工作实践，旨在解决工业看板中高频出现的实时数据联动、语义化状态预警及多端布局适配问题。
 
 ---
 
@@ -144,25 +144,29 @@ ContentView().sparkConfig(.ecoGreen)
 
 ---
 
-## 🤝 参与贡献
+## 🤝 参与共创 (Contributing)
 
-如果你在开发中发现了 Bug，或者有新的组件需求（如工业仪表盘、Neo4j 知识图谱组件等），欢迎：
+欢迎任何形式的贡献！无论是修复 Bug、提出新功能建议，还是改进文档。
 
-1. **Fork** 本仓库
-2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交你的更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启一个 **Pull Request**
+### 申请流程
+1. **Fork** 本项目到你的仓库。
+2. 在你的仓库中创建一个新的功能分支 (`feature/your-feature`)。
+3. 提交你的代码更改。
+4. 发起一个 **Pull Request** 指向本仓库的 `release/v0.1` 分支。
 
----
+### 联系作者
+如果你有深度的合作意向或想加入核心贡献者名单，请通过邮件与我联系：
+📩 **Email**: [kaijie0318@foxmail.com](mailto:kaijie0318@foxmail.com)
+
+请在邮件主题中注明：`[SparkUI 贡献申请] - 你的 GitHub ID - 合作意向`
 
 ---
 
 ## 👨‍💻 作者 (Author)
 
-**Zhang Kaijie (张凯杰)** * 🏛 **现任**: 浙江省能源平台前端架构师
+**Zhang Kaijie (张凯杰)**
 * 🚀 **专长**: 工业级 AI 应用、能源可视化看板、SwiftUI 跨平台开发
-* 💬 **交流**: 如果你有关于 `SparkUI` 的建议，或者有能源工业项目的技术咨询：
+* 💬 **交流**: 如果你有关于 `SparkUI` 的建议，或者有项目的技术咨询：
   * **WeChat**: `Auto-318` 
   * **GitHub**: [@SparkUIKit](https://github.com/SparkUIKit)
 
